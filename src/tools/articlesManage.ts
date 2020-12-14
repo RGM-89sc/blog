@@ -1,4 +1,4 @@
-import { ArticleObj } from "@Types/article"
+import { ArticleObj, TagsMap } from "@Types/article"
 
 interface ArticleMap {
   [id: string]: ArticleObj
@@ -8,8 +8,9 @@ export class ArticlesManage {
   static instance: ArticlesManage
   articleMap!: ArticleMap
   static articles_desc: ArticleObj[]
+  static tagsMap: TagsMap
 
-  constructor () {
+  constructor() {
     this.init()
   }
 
@@ -20,21 +21,25 @@ export class ArticlesManage {
     return this.instance
   }
 
-  init () {
+  init() {
     const _posts = window.localStorage.getItem('_posts') || '{}'
     this.articleMap = JSON.parse(_posts)
   }
 
-  getArticleDate(article: ArticleObj) {
+  private deepClone<T>(data: T): T {
+    return JSON.parse(JSON.stringify(data || ''))
+  }
+
+  getArticleDate(article: ArticleObj): Date {
     return new Date(article.content.meta.time.replace(/-/g, '/') || article.stat.birthtime)
   }
 
   // 按时间倒序排序
-  orderByBirthTimeDesc () {
+  orderByBirthTimeDesc(): ArticleObj[] {
     if (ArticlesManage.articles_desc) {
       return ArticlesManage.articles_desc
     }
-    const articles = JSON.parse(JSON.stringify(this.articleMap))
+    const articles = this.deepClone(this.articleMap)
     const keys = Object.keys(articles).sort((aKey: string, bKey: string) => {
       return this.getArticleDate(articles[bKey]).getTime() - this.getArticleDate(articles[aKey]).getTime()
     })
@@ -46,7 +51,23 @@ export class ArticlesManage {
     return result
   }
 
-  getArticleById (id: string) {
-    return JSON.parse(JSON.stringify(this.articleMap[id] || ''))
+  getArticleById(id: string): ArticleObj {
+    return this.deepClone(this.articleMap[id])
+  }
+
+  getAllTags(): TagsMap {
+    if (ArticlesManage.tagsMap instanceof Array) {
+      return ArticlesManage.tagsMap
+    }
+    const tagsMap: TagsMap = {}
+    const articles = this.deepClone(this.articleMap)
+    Object.values<ArticleObj>(articles).forEach((article: ArticleObj) => {
+      const articleTags = article.content.meta.tags
+      articleTags.length > 0 && articleTags.forEach((tag: string) => {
+        tagsMap[tag] ? tagsMap[tag].count++ : tagsMap[tag] = { count: 1 }
+      })
+    })
+    ArticlesManage.tagsMap = tagsMap
+    return tagsMap
   }
 }

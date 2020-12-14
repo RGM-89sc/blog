@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { setHeaderTypeAction } from '@Store/actions'
 import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
+import { ArticlesManage } from '@Tools/articlesManage'
 import useContentWidth from '@Hooks/useContentWidth'
 
 interface IProps {
@@ -21,6 +22,10 @@ function CateoryList(props: IProps) {
     padding: 1rem 1.5rem;
     width: ${contentWidth};
   `
+
+  const articlesManage = ArticlesManage.getInstance()
+  const tagsMap = articlesManage.getAllTags()
+  console.log(tagsMap)
   
   return (
     <div css={categoryListCss}>
