@@ -88,7 +88,7 @@ function Nav(props: IProps) {
         setCurrentTab('setting')
       },
     },
-  ];
+  ]
 
   return (
     <div id='nav' css={navCss}>

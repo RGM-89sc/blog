@@ -7,8 +7,10 @@ import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 import { ArticlesManage } from '@Tools/articlesManage'
 import useContentWidth from '@Hooks/useContentWidth'
+import { RouteComponentProps } from 'react-router-dom'
+import { Path, LocationDescriptorObject } from 'history'
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   store: StoreState
   setHeaderType: (headerType: string) => any
 }
@@ -50,7 +52,13 @@ function CateoryList(props: IProps) {
   const tagsMap = articlesManage.getAllTags()
 
   function searchArticles(tag: string) {
-    console.log(tag)
+    routeTo('/?category=' + tag)
+  }
+
+  function routeTo (route: Path | LocationDescriptorObject) {
+    if (typeof route === 'string') {
+      props.history.push(route)
+    }
   }
   
   return (

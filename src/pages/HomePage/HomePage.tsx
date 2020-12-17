@@ -48,7 +48,19 @@ function HomePage (props: IProps) {
   }`
 
   const articlesManage = ArticlesManage.getInstance()
-  const _posts = articlesManage.orderByBirthTimeDesc()
+
+  const querys = props.location.search.substring(1).split('&')
+  let category = ''
+  querys.some(query => {
+    const [key, value] = query.split('=')
+    if (key === 'category') {
+      category = value
+      return true
+    }
+    return false
+  })
+
+  const _posts = category ? articlesManage.getArticlesByCategory(category) : articlesManage.orderByBirthTimeDesc()
 
   const colors = [
     '#fcecdf',

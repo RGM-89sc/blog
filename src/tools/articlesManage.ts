@@ -51,6 +51,11 @@ export class ArticlesManage {
     return result
   }
 
+  getArticlesByCategory(category: string): ArticleObj[] {
+    const articles = this.orderByBirthTimeDesc()
+    return articles.filter((article: ArticleObj) => article.content.meta.tags.includes(category))
+  }
+
   getArticleById(id: string): ArticleObj {
     return this.deepClone(this.articleMap[id])
   }
