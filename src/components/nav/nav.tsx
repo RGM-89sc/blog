@@ -1,24 +1,28 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 import { Link } from 'react-router-dom'
 import useContentWidth from '@Hooks/useContentWidth'
+import { setCurrentTabAction } from '@Store/actions'
 
 interface IProps {
-  store: StoreState
+  store: StoreState;
+  setCurrentTab: (currentTab: string) => any;
 }
 
 function Nav(props: IProps) {
-  const matchResult = location.hash.match(/^#\/([^/]+)/)
-  let currentTabShouldBe = ''
-  if (matchResult) {
-    currentTabShouldBe = matchResult[1]
-  }
-  const [currentTab, setCurrentTab] = useState(currentTabShouldBe)
-
+  useEffect(() => {
+    const matchResult = location.hash.match(/^#\/([^/]+)/)
+    let currentTabShouldBe = ''
+    if (matchResult) {
+      currentTabShouldBe = matchResult[1]
+    }
+    props.setCurrentTab(currentTabShouldBe)
+  }, [])
+  
   const contentWidth = useContentWidth()
 
   const navCss = css`
@@ -64,28 +68,28 @@ function Nav(props: IProps) {
     {
       id: '',
       text: '首页',
-      handler: setCurrentTab,
+      handler: props.setCurrentTab,
     },
     {
       id: 'category',
       text: '分类',
-      handler: setCurrentTab,
+      handler: props.setCurrentTab,
     },
     {
       id: 'project',
       text: '项目',
-      handler: setCurrentTab,
+      handler: props.setCurrentTab,
     },
     {
       id: 'proving-ground',
       text: '试验场',
-      handler: setCurrentTab,
+      handler: props.setCurrentTab,
     },
     {
       id: 'setting',
       text: '设置',
       handler: () => {
-        setCurrentTab('setting')
+        props.setCurrentTab('setting')
       },
     },
   ]
@@ -95,7 +99,7 @@ function Nav(props: IProps) {
       {navList.map((nav) => (
         <div
           className={`nav-item ${
-            currentTab === nav.id ? 'nav-item-active' : ''
+            props.store.currentTab === nav.id ? 'nav-item-active' : ''
           }`}
           key={nav.id}
         >
@@ -120,7 +124,9 @@ function mapStateToProps(state: any) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
-  return {}
+  return {
+    setCurrentTab: (currentTab: string) => dispatch(setCurrentTabAction(currentTab))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Nav))

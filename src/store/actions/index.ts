@@ -1,4 +1,4 @@
-import { setHeaderType, setCurrentArticle } from '@Types/actions'
+import { setHeaderType, setCurrentArticle, setCurrentTab } from '@Types/actions'
 import { CurrentArticleInfo } from '@Types/article'
 
 export const setHeaderTypeAction = (value: string) => ({
@@ -8,5 +8,10 @@ export const setHeaderTypeAction = (value: string) => ({
 
 export const setCurrentArticleAction = (value: CurrentArticleInfo) => ({
   type: setCurrentArticle,
+  value: value
+})
+
+export const setCurrentTabAction = (value: string) => ({
+  type: setCurrentTab,
   value: value
 })

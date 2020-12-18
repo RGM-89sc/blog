@@ -8,5 +8,6 @@ export interface StoreState {
       [key: string]: any;
     }
   };
+  currentTab: string;
   [key: string]: any;
 }

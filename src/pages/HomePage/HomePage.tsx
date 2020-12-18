@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core'
 import React, { useEffect } from 'react'
 import PostCard from '@Components/post-card'
 import { connect } from 'react-redux'
-import { setHeaderTypeAction } from '@Store/actions'
+import { setCurrentTabAction, setHeaderTypeAction } from '@Store/actions'
 import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 import { ArticleObj } from '@Types/article'
@@ -13,13 +13,9 @@ import { ArticlesManage } from '@Tools/articlesManage'
 import useContentWidth from '@Hooks/useContentWidth'
 
 interface IProps extends RouteComponentProps {
-  store: StoreState
-  setHeaderType: (headerType: string) => any
-}
-
-interface IState {
-  posts: ArticleObj[]
-  color: string[]
+  store: StoreState;
+  setHeaderType: (headerType: string) => any;
+  setCurrentTab: (currentTab: string) => any;
 }
 
 const boxCss = css`
@@ -36,6 +32,7 @@ function HomePage (props: IProps) {
     if (props.store.headerType !== 'default') {
       props.setHeaderType('default')
     }
+    props.setCurrentTab('')
   }, [])
 
   const contentWidth = useContentWidth()
@@ -135,7 +132,8 @@ function mapStateToProps (state: any) {
 
 function mapDispatchToProps (dispatch: Dispatch) {
   return {
-    setHeaderType: (headerType: string) => dispatch(setHeaderTypeAction(headerType))
+    setHeaderType: (headerType: string) => dispatch(setHeaderTypeAction(headerType)),
+    setCurrentTab: (currentTab: string) => dispatch(setCurrentTabAction(currentTab))
   }
 }
 
