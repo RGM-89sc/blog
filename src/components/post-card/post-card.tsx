@@ -8,7 +8,6 @@ import { setHeaderTypeAction } from '@Store/actions'
 import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 
-
 interface IProps {
   store: StoreState,
   detail: ArticleObj,
@@ -17,44 +16,6 @@ interface IProps {
 }
 
 interface IState {}
-
-const styles = {
-  postCard: css`
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 2rem;
-    padding: 10px 20px;
-    width: 100%;
-    min-height: 120px;
-    border-left: 4px solid transparent;
-    transition: all .5s;
-  
-    &:hover {
-      border-color: #dae0e2;
-    }
-  `,
-  title: css`
-    display: block;
-    padding: 0 0 10px;
-    font-size: 1.5rem;
-    cursor: pointer;
-  `,
-  date: css`
-    color: #606266;
-  `,
-  tags: css`
-    padding: 10px 0 0;
-  `,
-  tag: css`
-    display: inline-block;
-    margin-right: 10px;
-    padding: 5px 10px;
-    background-color: #eee;
-    border-radius: 5px;
-  `
-}
 
 class PostCard extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -78,6 +39,45 @@ class PostCard extends React.PureComponent<IProps, IState> {
   }
 
   render() {
+    const styles = {
+      postCard: css`
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 2rem;
+        padding: 10px 20px;
+        width: 100%;
+        min-height: 120px;
+        border-left: 4px solid transparent;
+        transition: all .5s;
+      
+        &:hover {
+          border-color: #dae0e2;
+        }
+      `,
+      title: css`
+        display: block;
+        padding: 0 0 10px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        ${this.props.store.theme.acticleCardTitle ? 'color: ' + this.props.store.theme.acticleCardTitle : ''}
+      `,
+      date: css`
+        color: #606266;
+      `,
+      tags: css`
+        padding: 10px 0 0;
+      `,
+      tag: css`
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 10px;
+        background-color: #eee;
+        border-radius: 5px;
+      `
+    }
+
     return (
       <div css={styles.postCard}>
         <span css={styles.title} 

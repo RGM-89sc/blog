@@ -1,4 +1,4 @@
-import { setHeaderType, setCurrentArticle, setCurrentTab } from '@Types/actions'
+import { setHeaderType, setCurrentArticle, setCurrentTab, setIsShowSetting, setTheme } from '@Types/actions'
 import { CurrentArticleInfo } from '@Types/article'
 
 export const setHeaderTypeAction = (value: string) => ({
@@ -13,5 +13,15 @@ export const setCurrentArticleAction = (value: CurrentArticleInfo) => ({
 
 export const setCurrentTabAction = (value: string) => ({
   type: setCurrentTab,
+  value: value
+})
+
+export const setIsShowSettingAction = (value: boolean) => ({
+  type: setIsShowSetting,
+  value: value
+})
+
+export const setThemeAction = (value: any) => ({
+  type: setTheme,
   value: value
 })

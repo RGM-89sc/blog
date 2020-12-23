@@ -7,7 +7,13 @@ export type SetCurrentArticle = typeof setCurrentArticle
 export const setCurrentTab = 'setCurrentTab'
 export type SetCurrentTab = typeof setCurrentTab
 
+export const setIsShowSetting = 'setIsShowSetting'
+export type SetIsShowSetting = typeof setIsShowSetting
+
+export const setTheme = 'setTheme'
+export type SetTheme = typeof setTheme
+
 export interface Actions {
-  type: SetHeaderType | SetCurrentArticle | SetCurrentTab
+  type: SetHeaderType | SetCurrentArticle | SetCurrentTab | SetIsShowSetting | SetTheme
   [key: string]: any
 }

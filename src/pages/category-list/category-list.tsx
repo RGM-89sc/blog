@@ -9,6 +9,7 @@ import { ArticlesManage } from '@Tools/articlesManage'
 import useContentWidth from '@Hooks/useContentWidth'
 import { RouteComponentProps } from 'react-router-dom'
 import { Path, LocationDescriptorObject } from 'history'
+import Content from '@Components/content'
 
 interface IProps extends RouteComponentProps {
   store: StoreState
@@ -19,11 +20,6 @@ function CateoryList(props: IProps) {
   const contentWidth = useContentWidth()
 
   const categoryListCss = css`
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    width: ${contentWidth};
-
     .category {
       display: flex;
       justify-content: space-between;
@@ -62,14 +58,16 @@ function CateoryList(props: IProps) {
   }
   
   return (
-    <div css={categoryListCss}>
-      {Object.keys(tagsMap).map(tag => (
-        <div className="category" key={tag}>
-          <span className="tag-name" onClick={() => searchArticles(tag)}>{tag}</span>
-          <span className="count">{tagsMap[tag].count}</span>
-        </div>
-      ))}
-    </div>
+    <Content>
+      <div css={categoryListCss}>
+        {Object.keys(tagsMap).map(tag => (
+          <div className="category" key={tag}>
+            <span className="tag-name" onClick={() => searchArticles(tag)}>{tag}</span>
+            <span className="count">{tagsMap[tag].count}</span>
+          </div>
+        ))}
+      </div>
+    </Content>
   )
 }
 

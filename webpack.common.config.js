@@ -17,7 +17,8 @@ module.exports = {
       '@Tools': path.resolve(__dirname, './src/tools/'),
       '@Types': path.resolve(__dirname, './src/types/'),
       '@Store': path.resolve(__dirname, './src/store/'),
-      '@Hooks': path.resolve(__dirname, './src/hooks/')
+      '@Hooks': path.resolve(__dirname, './src/hooks/'),
+      '@Config': path.resolve(__dirname, './src/config/')
     },
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: [".ts", ".tsx", ".js", ".json"],

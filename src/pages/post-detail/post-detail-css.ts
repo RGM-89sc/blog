@@ -1,12 +1,10 @@
-export default function (contentWidth: string) {
-  return `
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    width: ${contentWidth};
-    min-height: 100%;
-    overflow: hidden;
+interface Params {
+  contentWidth: string;
+  headerTitleColor: string;
+}
 
+export default function ({ contentWidth, headerTitleColor }: Params) {
+  return `
     .pre-detail {
       .go-back {
         display: inline-block;
@@ -58,7 +56,7 @@ export default function (contentWidth: string) {
         margin-bottom: 1rem;
         font-weight: bold;
         line-height: 1.4;
-        color: #232323;
+        color: ${headerTitleColor};
         cursor: text;
       }
 

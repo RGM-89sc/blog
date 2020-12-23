@@ -6,11 +6,13 @@ import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 import { Link } from 'react-router-dom'
 import useContentWidth from '@Hooks/useContentWidth'
-import { setCurrentTabAction } from '@Store/actions'
+import { setCurrentTabAction, setIsShowSettingAction } from '@Store/actions'
+import SettingPopup from '@Components/setting-popup'
 
 interface IProps {
   store: StoreState;
   setCurrentTab: (currentTab: string) => any;
+  setIsShowSetting: (isShowSetting: boolean) => any;
 }
 
 function Nav(props: IProps) {
@@ -90,12 +92,17 @@ function Nav(props: IProps) {
       text: '设置',
       handler: () => {
         props.setCurrentTab('setting')
+        props.setIsShowSetting(true)
       },
     },
   ]
 
+  function stopImmediatePropagation(event: React.MouseEvent) {
+    event.nativeEvent.stopImmediatePropagation()
+  }
+
   return (
-    <div id='nav' css={navCss}>
+    <div id='nav' css={navCss} onClick={stopImmediatePropagation}>
       {navList.map((nav) => (
         <div
           className={`nav-item ${
@@ -113,6 +120,8 @@ function Nav(props: IProps) {
           )}
         </div>
       ))}
+
+      {props.store.isShowSetting && <SettingPopup />}
     </div>
   )
 }
@@ -125,7 +134,8 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    setCurrentTab: (currentTab: string) => dispatch(setCurrentTabAction(currentTab))
+    setCurrentTab: (currentTab: string) => dispatch(setCurrentTabAction(currentTab)),
+    setIsShowSetting: (isShowSetting: boolean) => dispatch(setIsShowSettingAction(isShowSetting))
   }
 }
 

@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { setCurrentArticleAction, setHeaderTypeAction } from '@Store/actions'
 import { Dispatch } from 'redux'
 import { CurrentArticleInfo } from '@Types/article'
+import Content from '@Components/content'
 import useContentWidth from '@Hooks/useContentWidth'
 import hljs from 'highlight.js'
 import getCss from './post-detail-css'
@@ -64,9 +65,11 @@ function PostDetail(props: IProps) {
   }, [])
 
   return (
-    <div className="post-detail" css={css`${getCss(contentWidth)}`}>
-      <div className="content" dangerouslySetInnerHTML={{ __html: postDetail.content?.html || '' }}></div>
-    </div>
+    <Content>
+      <div className="post-detail" css={css`${getCss({ contentWidth, headerTitleColor: props.store.theme.postDetail.headerTitle })}`}>
+        <div className="content" dangerouslySetInnerHTML={{ __html: postDetail.content?.html || '' }}></div>
+      </div>
+    </Content>
   )
 }
 

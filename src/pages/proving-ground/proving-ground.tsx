@@ -6,6 +6,7 @@ import { setHeaderTypeAction } from '@Store/actions'
 import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 import useContentWidth from '@Hooks/useContentWidth'
+import Content from '@Components/content'
 
 interface IProps {
   store: StoreState
@@ -16,16 +17,15 @@ function ProvingGround(props: IProps) {
   const contentWidth = useContentWidth()
 
   const provingGroundCss = css`
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    width: ${contentWidth};
+    
   `
 
   return (
-    <div css={provingGroundCss}>
-      试验场
-    </div>
+    <Content>
+      <div css={provingGroundCss}>
+        试验场
+      </div>
+    </Content>
   )
 }
 

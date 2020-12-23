@@ -11,6 +11,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Path, LocationDescriptorObject } from 'history'
 import { ArticlesManage } from '@Tools/articlesManage'
 import useContentWidth from '@Hooks/useContentWidth'
+import Content from '@Components/content'
 
 interface IProps extends RouteComponentProps {
   store: StoreState;
@@ -32,16 +33,16 @@ function HomePage (props: IProps) {
     if (props.store.headerType !== 'default') {
       props.setHeaderType('default')
     }
-    props.setCurrentTab('')
+
+    if (props.store.currentTab !== '') {
+      props.setCurrentTab('')
+    }
   }, [])
 
   const contentWidth = useContentWidth()
 
   const postListStyle = css`
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    width: ${contentWidth};
+    
   }`
 
   const articlesManage = ArticlesManage.getInstance()
@@ -108,6 +109,7 @@ function HomePage (props: IProps) {
   }
 
   return (
+    <Content>
       <div css={postListStyle}>
         {/* <div>
         {colors.map(color => {
@@ -117,10 +119,11 @@ function HomePage (props: IProps) {
         })}
         </div> */}
         
-      {_posts.map((post: ArticleObj) => (
-        <PostCard key={post.id} detail={Object.assign({}, post)} routeTo={routeTo} />
-      ))}
-    </div>
+        {_posts.map((post: ArticleObj) => (
+          <PostCard key={post.id} detail={Object.assign({}, post)} routeTo={routeTo} />
+        ))}
+      </div>
+    </Content>
   )
 }
 
