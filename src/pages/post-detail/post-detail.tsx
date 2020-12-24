@@ -64,9 +64,15 @@ function PostDetail(props: IProps) {
     getPostDetail()
   }, [])
 
+  const cssParams = { 
+    contentWidth, 
+    headerTitleColor: props.store.theme.postDetail.headerTitle, 
+    codeBg: props.store.theme.postDetail.codeBg 
+  }
+
   return (
     <Content>
-      <div className="post-detail" css={css`${getCss({ contentWidth, headerTitleColor: props.store.theme.postDetail.headerTitle })}`}>
+      <div className="post-detail" css={css`${getCss(cssParams)}`}>
         <div className="content" dangerouslySetInnerHTML={{ __html: postDetail.content?.html || '' }}></div>
       </div>
     </Content>

@@ -73,7 +73,8 @@ class PostCard extends React.PureComponent<IProps, IState> {
         display: inline-block;
         margin-right: 10px;
         padding: 5px 10px;
-        background-color: #eee;
+        color: ${this.props.store.theme.home.tagText};
+        background-color: ${this.props.store.theme.home.tagBg};
         border-radius: 5px;
       `
     }

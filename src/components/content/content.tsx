@@ -19,6 +19,7 @@ function Content (props: IProps) {
     height: 100%;
     color: ${props.store.theme.common.text};
     background-color: ${props.store.theme.common.bg};
+    min-height: calc(100vh - 450px - 15px);
   `
 
   const contentStyle = css`
@@ -26,7 +27,7 @@ function Content (props: IProps) {
     margin: 0 auto;
     padding: 1rem 1.5rem 100px;
     width: ${contentWidth};
-    min-height: calc(100vh - 450px - 15px);
+    height: 100%;
   }`
 
   return (

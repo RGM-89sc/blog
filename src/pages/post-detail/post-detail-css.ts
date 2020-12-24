@@ -1,9 +1,10 @@
 interface Params {
   contentWidth: string;
   headerTitleColor: string;
+  codeBg: string;
 }
 
-export default function ({ contentWidth, headerTitleColor }: Params) {
+export default function ({ contentWidth, headerTitleColor, codeBg }: Params) {
   return `
     .pre-detail {
       .go-back {
@@ -288,7 +289,7 @@ export default function ({ contentWidth, headerTitleColor }: Params) {
           line-height: 1rem;
           font-family: Consolas;
           color: #5e5e72;
-          background-color: #e8e7ec;
+          background-color: ${codeBg};
           border-radius: 5px;
         }
 

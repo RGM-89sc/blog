@@ -42,7 +42,7 @@ function HomePage (props: IProps) {
   const contentWidth = useContentWidth()
 
   const postListStyle = css`
-    
+    color: ${props.store.theme.home.text};
   }`
 
   const articlesManage = ArticlesManage.getInstance()
