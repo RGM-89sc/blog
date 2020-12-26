@@ -121,7 +121,7 @@ function Nav(props: IProps) {
         </div>
       ))}
 
-      {props.store.isShowSetting && <SettingPopup />}
+      <SettingPopup />
     </div>
   )
 }

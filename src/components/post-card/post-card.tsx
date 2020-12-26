@@ -51,6 +51,10 @@ class PostCard extends React.PureComponent<IProps, IState> {
         min-height: 120px;
         border-left: 4px solid transparent;
         transition: all .5s;
+
+        &:first-of-type {
+          margin-top: 0.5rem;
+        }
       
         &:hover {
           border-color: #dae0e2;
@@ -60,6 +64,7 @@ class PostCard extends React.PureComponent<IProps, IState> {
         display: block;
         padding: 0 0 10px;
         font-size: 1.5rem;
+        word-break: break-word;
         cursor: pointer;
         ${this.props.store.theme.acticleCardTitle ? 'color: ' + this.props.store.theme.acticleCardTitle : ''}
       `,
@@ -72,6 +77,7 @@ class PostCard extends React.PureComponent<IProps, IState> {
       tag: css`
         display: inline-block;
         margin-right: 10px;
+        margin-bottom: 10px;
         padding: 5px 10px;
         color: ${this.props.store.theme.home.tagText};
         background-color: ${this.props.store.theme.home.tagBg};

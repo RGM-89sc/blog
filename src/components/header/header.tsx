@@ -5,22 +5,24 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 import Nav from '@Components/nav'
+import useContentWidth from '@Hooks/useContentWidth'
 
 interface IProps {
   store: StoreState
 }
 
 function Header (props: IProps) {
+  const contentWidth = useContentWidth()
+
   const headerCss = {
     base: css`
       position: relative;
       width: 100%;
-      height: 450px;
       background-color: ${props.store.theme.common.bg};
+      overflow: hidden;
   
       .main {
-        position: absolute;
-        margin: 50px 0;
+        margin: ${50  * ((150 - parseInt(contentWidth)) / 100)}px 0;
         padding: 1.5rem 0;
         width: 100%;
         text-align: center;
@@ -31,7 +33,7 @@ function Header (props: IProps) {
     blogName: css`
       display: block;
       margin-bottom: 1.5rem;
-      font-size: 4.5rem;
+      font-size: ${4.5 * ((150 - parseInt(contentWidth)) / 100)}rem;
       font-weight: bold;
       text-indent: 0.11ch;
       letter-spacing: 0.1ch;

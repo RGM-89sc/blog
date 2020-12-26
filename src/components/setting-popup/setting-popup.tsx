@@ -19,7 +19,6 @@ interface IProps {
 function SettingPopup(props: IProps) {
   useEffect(() => {
     function handler() {
-      console.log('点击')
       const matchResult = location.hash.match(/^#\/([^/]+)/)
       let currentTabShouldBe = ''
       if (matchResult) {
@@ -37,13 +36,29 @@ function SettingPopup(props: IProps) {
   
   const contentWidth = useContentWidth()
 
+  function getSettingPopupWidth(contentWidth: number) {
+    let result = contentWidth
+    if (contentWidth >= 90) {
+      return 70
+    } else if (contentWidth >= 80) {
+      return 40
+    } else if (contentWidth >= 70) {
+      return 40
+    } else if (contentWidth >= 60) {
+      return 30
+    } else if (contentWidth >= 50) {
+      return 20
+    }
+    return result
+  }
+
   const settingPopupCss = css`
     box-sizing: border-box;
     position: fixed;
     top: 0;
     right: 0;
     padding: 20px;
-    width: 20vw;
+    width: ${getSettingPopupWidth(parseInt(contentWidth))}vw;
     max-width: 600px;
     height: 100vh;
     color: ${props.store.theme.setting.label};
@@ -51,6 +66,7 @@ function SettingPopup(props: IProps) {
     z-index: 2;
     overflow-x: hidden;
     overflow-y: auto;
+    transition: right 0.8s;
   `
 
   const themeSettingCss = css`
@@ -75,7 +91,7 @@ function SettingPopup(props: IProps) {
   }
 
   return (
-    <div id='setting-popup' css={settingPopupCss} onClick={stopImmediatePropagation}>
+    <div id='setting-popup' css={settingPopupCss} onClick={stopImmediatePropagation} style={{ right: props.store.isShowSetting ? '0' : '-100%' }}>
       <div css={themeSettingCss}>
         <span>关灯</span>
         <Switch checked={props.store.theme.name === 'dark'} checkedColor={props.store.theme.setting.checked} onChange={onSwicthChange} />
