@@ -3,7 +3,7 @@ const merge = require('webpack-merge')
 const common = require('./webpack.common.config.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -41,7 +41,7 @@ module.exports = merge(common, {
       dirPath: path.join(__dirname, './src/assets/post'),
       interceptor: (parser, markdownString) => {
         markdownString = markdownString.replace(/^[\r\n ]+/, '')
-        const content = markdownString.replace(/^-{3,}(?:.|\n)+-{3,}/, '')
+        const content = markdownString.replace(/^-{3,}(?:.|[\r\n])+-{3,}/, '')
         const metaString = markdownString.slice(0, markdownString.length - content.length)
         const titleMatchResult = metaString.match(/\[title\]:([^\r\n\[]+)/i)
         const timeMatchResult = metaString.match(/\[time\]:([^\r\n\[]+)/i)
@@ -64,7 +64,19 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: [
+          'babel-loader'
+        ]
+      },
+      {
         test: /\.css$/,
+        // exclude: /node_modules/,  // exclude优先级会更高
+        include: [
+          path.resolve(__dirname, 'node_modules/highlight.js'),
+          path.resolve(__dirname, 'src/pages/'),
+          path.resolve(__dirname, 'src/components/'),
+        ],
         use: [ 
           MiniCssExtractPlugin.loader, 
           'css-loader',
@@ -73,6 +85,7 @@ module.exports = merge(common, {
       },
       {
         test: /\.(sass|scss)$/,
+        exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
@@ -80,22 +93,12 @@ module.exports = merge(common, {
           'sass-loader'
         ]
       },
-      // {
-      //   test: /\.md$/,
-      //   use: [
-      //     {
-      //       loader: '@rgm-89sc/markdown-webpack-loader',
-      //       options: {
-
-      //       }
-      //     }
-      //   ]
-      // }
     ],
   },
   optimization: {
+    minimize: true,
     minimizer: [
-      new UglifyJsPlugin(),
+      new TerserPlugin(),
       new OptimizeCssAssetsPlugin({
         assetNameRegExp: /\.css$/g,
         cssProcessor: require("cssnano"),
