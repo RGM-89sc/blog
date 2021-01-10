@@ -24,8 +24,10 @@ function SettingPopup(props: IProps) {
       if (matchResult) {
         currentTabShouldBe = matchResult[1]
       }
-      props.setIsShowSetting(false)
-      props.setCurrentTab(currentTabShouldBe)
+      if (props.store.isShowSetting) {
+        props.setIsShowSetting(false)
+        props.setCurrentTab(currentTabShouldBe)
+      }
     }
 
     document.addEventListener('click', handler)
