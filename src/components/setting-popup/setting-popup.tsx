@@ -17,19 +17,18 @@ interface IProps {
 }
 
 function SettingPopup(props: IProps) {
-  useEffect(() => {
-    function handler() {
-      const matchResult = location.hash.match(/^#\/([^/]+)/)
-      let currentTabShouldBe = ''
-      if (matchResult) {
-        currentTabShouldBe = matchResult[1]
-      }
-      if (props.store.isShowSetting) {
-        props.setIsShowSetting(false)
-        props.setCurrentTab(currentTabShouldBe)
-      }
+  function handler() {
+    const matchResult = location.hash.match(/^#\/([^/]+)/)
+    let currentTabShouldBe = ''
+    if (matchResult) {
+      currentTabShouldBe = matchResult[1]
     }
 
+    props.setIsShowSetting(false)
+    props.setCurrentTab(currentTabShouldBe)
+  }
+
+  useEffect(() => {
     document.addEventListener('click', handler)
     return () => {
       document.removeEventListener('click', handler)
