@@ -67,7 +67,7 @@ function PostDetail(props: IProps) {
   const cssParams = { 
     contentWidth, 
     headerTitleColor: props.store.theme.postDetail.headerTitle, 
-    codeBg: props.store.theme.postDetail.codeBg 
+    codeBg: props.store.theme.postDetail.codeBg
   }
 
   return (

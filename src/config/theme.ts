@@ -4,9 +4,12 @@ export const darkTheme = {
     bg: '#0d1117',
     text: '#797993'
   },
+  navItem: {
+    bg: '#333339',
+  },
   home: {
     text: '#000',
-    tagBg: '#b3b9c5',
+    tagBg: '#333339',
     tagText: '#fcecdf',
   },
   postDetail: {
@@ -28,6 +31,9 @@ export const lightTheme = {
   name: 'light',
   common: {
     bg: '#f7f5f6'
+  },
+  navItem: {
+    bg: '#e8e7ec',
   },
   home: {
     text: '',

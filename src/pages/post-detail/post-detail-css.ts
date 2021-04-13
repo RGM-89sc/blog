@@ -16,29 +16,6 @@ export default function ({ contentWidth, headerTitleColor, codeBg }: Params) {
       }
     }
 
-    .header {
-      .title {
-        color: #303133;
-      }
-
-      .date {
-        font-size: 1.05rem;
-        color: #606266;
-      }
-
-      .tags {
-        padding: 20px 0;
-
-        .tag {
-          display: inline-block;
-          margin-right: 10px;
-          padding: 5px 15px;
-          background-color: #eee;
-          border-radius: 5px;
-        }
-      }
-    }
-
     .content {
       overflow: hidden;
 

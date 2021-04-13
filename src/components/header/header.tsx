@@ -66,7 +66,8 @@ function Header (props: IProps) {
             display: inline-block;
             margin-right: 10px;
             padding: 5px 15px;
-            background-color: #eee;
+            color: ${props.store.theme.home.tagText};
+            background-color: ${props.store.theme.home.tagBg};
             border-radius: 5px;
           }
         }

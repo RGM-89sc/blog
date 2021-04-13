@@ -40,7 +40,7 @@ function Nav(props: IProps) {
       flex: 1;
 
       &-active {
-        background-color: #e8e7ec;
+        background-color: ${props.store.theme.navItem.bg};
       }
 
       a {
