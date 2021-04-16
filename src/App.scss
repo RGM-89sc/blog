@@ -1,14 +1,16 @@
 #app {
+  display: flex;
+  flex-direction: column;
+  position: relative;
   width: 100%;
   min-height: 100%;
-  // background-color: #F4F8FB;
   background-color: #f7f5f6;
 }
 
 #content {
   box-sizing: border-box;
-  width: 100%;
-  min-height: calc(100vh - 345px);
+  display: flex;
+  flex: 1;
   transform: translate(0, 0);
   overflow: hidden;
 }

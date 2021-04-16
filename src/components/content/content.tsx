@@ -14,20 +14,10 @@ interface IProps {
 function Content (props: IProps) {
   const contentWidth = useContentWidth()
 
-  const headerEl = document.getElementById('header')
-  const headerELHeight = headerEl?.getClientRects()[0].height
-
-  function getMinHeight() {
-    return `calc(100vh - ${headerELHeight || 0}px - 15px)`
-  }
-
   const contentBoxStyle = css`
-    width: 100%;
-    height: 100%;
+    flex: 1;
     color: ${props.store.theme.common.text};
     background-color: ${props.store.theme.common.bg};
-    min-height: 100vh;
-    min-height: ${getMinHeight()};
   `
 
   const contentStyle = css`

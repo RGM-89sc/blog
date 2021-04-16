@@ -46,4 +46,4 @@ function App(props: IProps) {
   )
 }
 
-export default withRouter(App)
+export default React.memo(withRouter(App))

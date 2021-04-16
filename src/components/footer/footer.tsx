@@ -11,6 +11,8 @@ interface IProps {
 
 function Footer (props: IProps) {
   const footerStyle = css`
+    position: absolute;
+    bottom: 0; 
     height: 15px;
     width: 100%;
     background-color: ${props.store.theme.footer.bg};
