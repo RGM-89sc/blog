@@ -1,23 +1,23 @@
 const path = require('path')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.common.config.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CreateMarkDownMapPlugin = require('@rgm-89sc/create-markdown-map-plugin')
 
 module.exports = merge(common, {
   mode: 'production',
   output: {
-    filename: 'js/[name].[chunkhash:8].bundle.js',
+    filename: 'js/[name].[contenthash:8].bundle.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'public/index.html',
+      template: 'src/index.html',
       inject: 'body',
       minify: {
         removeComments: true,
@@ -25,8 +25,8 @@ module.exports = merge(common, {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[id].[hash].css',
+      filename: 'css/[name].[fullhash].css',
+      chunkFilename: 'css/[id].[fullhash].css',
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -99,20 +99,22 @@ module.exports = merge(common, {
     minimize: true,
     minimizer: [
       new TerserPlugin(),
-      new OptimizeCssAssetsPlugin({
-        assetNameRegExp: /\.css$/g,
-        cssProcessor: require("cssnano"),
-        cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }]
+      new CssMinimizerPlugin({
+        parallel: true,
+        minimizerOptions: {
+          preset: [
+            'default',
+            {
+              discardComments: { removeAll: true },
+            },
+          ],
         },
-        canPrint: true,
-        discardComments: true
       })
     ],
     splitChunks: {  // 抽离公共模块
       chunks: 'all',
       minSize: 30000,
-      maxSize: 0,
+      maxSize: 30000,
       minChunks: 1,
       cacheGroups: {
         framework: {

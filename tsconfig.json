@@ -26,7 +26,8 @@
       "@Types/*": ["src/types/*"],
       "@Store/*": ["src/store/*"],
       "@Hooks/*": ["src/hooks/*"],
-      "@Config/*": ["src/config/*"]
+      "@Config/*": ["src/config/*"],
+      "@Lib/*": ["src/lib/*"],
     }
   },
   "exclude": [

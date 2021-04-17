@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import { css, jsx } from '@emotion/react'
 import React, { useState, useEffect } from 'react'
 import { StoreState } from '@Types/storeState'
 import { ArticleObj } from '@Types/article'
@@ -11,7 +11,7 @@ import { Dispatch } from 'redux'
 import { CurrentArticleInfo } from '@Types/article'
 import Content from '@Components/content'
 import useContentWidth from '@Hooks/useContentWidth'
-import hljs from 'highlight.js'
+import hljs from '@Lib/highlight'
 import getCss from './post-detail-css'
 import 'highlight.js/styles/atom-one-dark.css'
 
@@ -21,11 +21,8 @@ interface IProps extends RouteComponentProps {
   setHeaderType: (headerType: string) => any
 }
 
-interface IState {
-  detail: ArticleObj
-}
-
 function PostDetail(props: IProps) {
+  console.log('PostDetail')
   window.scrollTo({ top: 0, left: 0 })
 
   const contentWidth = useContentWidth()
@@ -36,10 +33,10 @@ function PostDetail(props: IProps) {
     stat: {}
   })
 
-  function highlightBlock() {
+  function highlightElement() {
     setTimeout(() => {
       document.querySelectorAll('.post-detail > .content pre > code').forEach((block) => {
-        hljs.highlightBlock(block)
+        hljs.highlightElement(block as HTMLElement)
       })
     })
   }
@@ -57,7 +54,7 @@ function PostDetail(props: IProps) {
         tags: detail.content.meta?.tags || []
       }
     })
-    highlightBlock()
+    highlightElement()
   }
 
   useEffect(() => {

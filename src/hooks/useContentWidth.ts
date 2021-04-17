@@ -30,10 +30,10 @@ function useContentWidth() {
   let [contentWidth, setContentWidth] = useState(getContentWidth())
 
   function debounce(handle: () => any, delay: number) {
-    let timer: NodeJS.Timeout
+    let timer: number
     return () => {
-      clearTimeout(timer)
-      timer = setTimeout(handle, delay)
+      window.clearTimeout(timer)
+      timer = window.setTimeout(handle, delay)
     }
   }
 

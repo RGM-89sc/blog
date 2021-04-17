@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import { css, jsx } from '@emotion/react'
 import { StoreState } from '@Types/storeState'
 import React from 'react'
 import { connect } from 'react-redux'

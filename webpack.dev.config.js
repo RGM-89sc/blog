@@ -1,6 +1,6 @@
 
 const path= require('path')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.common.config.js')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -10,7 +10,7 @@ const CreateMarkDownMapPlugin = require('@rgm-89sc/create-markdown-map-plugin')
 module.exports = merge(common, {
   mode: 'development',
   output: {
-    filename: 'js/[name].[hash:8].bundle.js',
+    filename: 'js/[name].[fullhash:8].bundle.js',
   },
   devServer: {
     // writeToDisk: true,
@@ -76,9 +76,8 @@ module.exports = merge(common, {
   },  
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
-      inject: 'body',
-      hash: false
+      filename: 'index.html',
+      template: 'src/index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CopyWebpackPlugin({

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import { css, jsx } from '@emotion/react'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
@@ -23,11 +23,11 @@ function SettingPopup(props: IProps) {
     if (matchResult) {
       currentTabShouldBe = matchResult[1]
     }
-
-    if (props.store.isShowSetting) {
+// console.log(props.store.isShowSetting)
+//     if (props.store.isShowSetting) {
       props.setIsShowSetting(false)
       props.setCurrentTab(currentTabShouldBe)
-    }
+    // }
   }
 
   useEffect(() => {

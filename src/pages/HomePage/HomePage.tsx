@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import { css, jsx } from '@emotion/react'
 import React, { useEffect } from 'react'
 import PostCard from '@Components/post-card'
 import { connect } from 'react-redux'
