@@ -113,8 +113,8 @@ module.exports = merge(common, {
     ],
     splitChunks: {  // 抽离公共模块
       chunks: 'all',
-      minSize: 30000,
-      maxSize: 30000,
+      minSize: 24000,
+      maxSize: 24000,
       minChunks: 1,
       cacheGroups: {
         framework: {
