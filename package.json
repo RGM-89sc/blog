@@ -13,7 +13,7 @@
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
     "@loadable/component": "^5.14.1",
-    "@rgm-89sc/create-markdown-map-plugin": "^1.0.2",
+    "@rgm-89sc/create-markdown-map-plugin": "^1.0.3",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.3",
