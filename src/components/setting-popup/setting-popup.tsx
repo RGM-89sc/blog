@@ -23,11 +23,10 @@ function SettingPopup(props: IProps) {
     if (matchResult) {
       currentTabShouldBe = matchResult[1]
     }
-// console.log(props.store.isShowSetting)
-//     if (props.store.isShowSetting) {
+    if (props.store.isShowSetting) {
       props.setIsShowSetting(false)
       props.setCurrentTab(currentTabShouldBe)
-    // }
+    }
   }
 
   useEffect(() => {
@@ -35,7 +34,7 @@ function SettingPopup(props: IProps) {
     return () => {
       document.removeEventListener('click', handler)
     }
-  }, [])
+  })
   
   const contentWidth = useContentWidth()
 
