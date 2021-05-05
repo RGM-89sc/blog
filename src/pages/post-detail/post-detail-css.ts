@@ -110,7 +110,6 @@ export default function ({ contentWidth, headerTitleColor, codeBg }: Params) {
         color: #777;
       }
 
-      p,
       blockquote,
       ul,
       ol,
@@ -254,7 +253,9 @@ export default function ({ contentWidth, headerTitleColor, codeBg }: Params) {
       }
 
       p {
-        line-height: 2.4rem;
+        margin: 0.9rem 0 0;
+        padding: 0 0 0.9rem;
+        line-height: 1.8rem;
         letter-spacing: 0.1ch;
 
         code {

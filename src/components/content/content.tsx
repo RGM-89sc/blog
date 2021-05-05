@@ -15,7 +15,9 @@ function Content (props: IProps) {
   const contentWidth = useContentWidth()
 
   const contentBoxStyle = css`
-    flex: 1;
+    box-sizing: border-box;
+    padding: 1rem 1rem 100px;
+    width: 100%;
     color: ${props.store.theme.common.text};
     background-color: ${props.store.theme.common.bg};
   `
@@ -23,7 +25,6 @@ function Content (props: IProps) {
   const contentStyle = css`
     box-sizing: border-box;
     margin: 0 auto;
-    padding: 1rem 1.5rem 100px;
     width: ${contentWidth};
     height: 100%;
   }`
