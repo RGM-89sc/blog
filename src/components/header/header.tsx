@@ -8,7 +8,8 @@ import Nav from '@Components/nav'
 import useContentWidth from '@Hooks/useContentWidth'
 
 interface IProps {
-  store: StoreState
+  store: StoreState;
+  onSearch: (keyword: string) => any
 }
 
 function Header (props: IProps) {
@@ -75,6 +76,18 @@ function Header (props: IProps) {
     }
   }
 
+  function onSearchWordChange() {
+    let timer: number | null = null
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (timer) {
+        window.clearTimeout(timer)
+      }
+      timer = window.setTimeout(() => {
+        props.onSearch(event.target.value)
+      }, 500)
+    }
+  }
+
   return (
     <div id="header" css={headerCss.base}>
       <Nav></Nav>
@@ -83,6 +96,7 @@ function Header (props: IProps) {
           <div>
             <span css={headerCss.blogName}>RGM's blog</span>
             <span css={headerCss.intro}>Pick up your sword and try again.</span>
+            {/* <input type="text" onChange={onSearchWordChange()} /> */}
           </div>
         }
         {props.store.headerType === 'article-detail' &&

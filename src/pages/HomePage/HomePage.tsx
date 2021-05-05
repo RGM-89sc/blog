@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
-import React, { useEffect } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
 import PostCard from '@Components/post-card'
 import { connect } from 'react-redux'
 import { setCurrentTabAction, setHeaderTypeAction } from '@Store/actions'
@@ -10,7 +10,6 @@ import { ArticleObj } from '@Types/article'
 import { RouteComponentProps } from 'react-router-dom'
 import { Path, LocationDescriptorObject } from 'history'
 import { ArticlesManage } from '@Tools/articlesManage'
-import useContentWidth from '@Hooks/useContentWidth'
 import Content from '@Components/content'
 
 interface IProps extends RouteComponentProps {
@@ -19,15 +18,15 @@ interface IProps extends RouteComponentProps {
   setCurrentTab: (currentTab: string) => any;
 }
 
-const boxCss = css`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 100px;
-`
+interface HomePageRef {
+  searchArticlesByKeyWord: (keyword: string) => void
+}
 
-function HomePage (props: IProps) {
+function HomePage (props: IProps, ref: React.Ref<HomePageRef> | undefined) {
+  useImperativeHandle(ref, () => ({
+    searchArticlesByKeyWord: searchArticlesByKeyWord
+  }))
+
   useEffect(() => {
     // 更新标题等信息
     if (props.store.headerType !== 'default') {
@@ -38,8 +37,6 @@ function HomePage (props: IProps) {
       props.setCurrentTab('')
     }
   }, [])
-
-  const contentWidth = useContentWidth()
 
   const postListStyle = css`
     color: ${props.store.theme.home.text};
@@ -58,49 +55,7 @@ function HomePage (props: IProps) {
     return false
   })
 
-  const _posts = category ? articlesManage.getArticlesByCategory(category) : articlesManage.orderByBirthTimeDesc()
-
-  const colors = [
-    '#fcecdf',
-    '#f7f5f6',
-    '#f3e1fb',
-    '#b0c1ef',
-    '#ecdac2',
-    '#ceb8aa',
-    '#ece9da',
-    '#bab1dc',
-    '#d9cdf5',
-    '#d3e6ec',
-    '#ecf0fc',
-    '#594c3b',
-    '#c1f5ff',
-    '#fea5bb',
-    '#aa8479',
-    '#d4b6ab',
-    '#b28ba6',
-    '#797993',
-    '#5fb4dd',
-    '#f7ae83',
-    '#b3b9c5',
-    '#e8e7ec',
-    '#e4ecef',
-    '#bedae5',
-    '#b00515',
-    '#bbcfd0',
-    '#fd1a38',
-    '#e8cce2',
-    '#f8d0d8',
-    '#fad5c2',
-    '#e9cec3',
-    '#e7a0a4',
-    '#cbc0c8',
-    '#FAEBD7',
-    '#DAA520',
-    '#2F4F4F',
-    '#98FB98',
-    '#7B68EE',
-    '#00CED1',
-  ]
+  let _posts = category ? articlesManage.getArticlesByCategory(category) : articlesManage.orderByBirthTimeDesc()
 
   function routeTo (route: Path | LocationDescriptorObject) {
     if (typeof route === 'string') {
@@ -108,17 +63,13 @@ function HomePage (props: IProps) {
     }
   }
 
+  function searchArticlesByKeyWord (keyword: string) {
+    console.log('search', keyword)
+  }
+
   return (
     <Content>
       <div css={postListStyle}>
-        {/* <div>
-        {colors.map(color => {
-           return (
-             <div css={boxCss} style={{backgroundColor: color}} key={color}>{color}</div>
-           )
-        })}
-        </div> */}
-        
         {_posts.map((post: ArticleObj) => (
           <PostCard key={post.id} detail={Object.assign({}, post)} routeTo={routeTo} />
         ))}
@@ -142,5 +93,7 @@ function mapDispatchToProps (dispatch: Dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(React.memo(HomePage))
+  mapDispatchToProps,
+  null, 
+  { forwardRef: true }
+)(forwardRef(HomePage))

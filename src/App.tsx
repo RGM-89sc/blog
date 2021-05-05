@@ -12,30 +12,48 @@ import Footer from '@Components/footer'
 
 interface IProps extends RouteComponentProps {}
 
+interface IRouteComponentProps extends IRouter {
+  [key: string]: any
+}
+
+interface HomePageRef {
+  searchArticlesByKeyWord: (keyword: string) => void
+}
+
 function App(props: IProps) {
+  const homePageRef = React.createRef<HomePageRef>()
+
+  function onSearch(keyword: string) {
+    homePageRef.current?.searchArticlesByKeyWord(keyword)
+  }
+
   return (
     <div id="app">
-      <Header />
+      <Header onSearch={onSearch} />
+
       <div id="content">
         <Switch>
           {router.map((route: IRouter) => {
-            const RouteComponent = ({ component, ...rest }: any) => {
+            const RouteComponent = React.forwardRef<HomePageRef, IRouteComponentProps>(({ component, ...rest }, ref) => {
               const routeComponentRender = (props: any) => {
                 // 此处assign自定义props传入页面组件
-                const extraProps = {}
+                let extraProps: { [key: string]: any } = {}
+                rest.name === 'homepage' && (extraProps['ref'] = ref)
                 return React.createElement(component, Object.assign(props, extraProps))
               }
 
               return <Route {...rest} render={routeComponentRender} />
-            }
+            })
   
             return (
               <RouteComponent 
                 key={route.name}
                 path={route.path}
-                name={route.label}
+                title={route.label}
+                name={route.name}
                 exact={route.exact}
                 component={route.component}
+                ref={homePageRef}
               />
             )
           })}
