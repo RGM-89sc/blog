@@ -75,4 +75,16 @@ export class ArticlesManage {
     ArticlesManage.tagsMap = tagsMap
     return tagsMap
   }
+
+  getArticlesByKeyword(keyword: string): ArticleObj[] {
+    if (!keyword) {
+      return []
+    }
+    return this.orderByBirthTimeDesc().filter(article => {
+      if (new RegExp(keyword).test(article.name || '')) {
+        return true
+      }
+      return false
+    })
+  }
 }

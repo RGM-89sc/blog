@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react'
-import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import PostCard from '@Components/post-card'
 import { connect } from 'react-redux'
 import { setCurrentTabAction, setHeaderTypeAction } from '@Store/actions'
@@ -19,12 +19,12 @@ interface IProps extends RouteComponentProps {
 }
 
 interface HomePageRef {
-  searchArticlesByKeyWord: (keyword: string) => void
+  searchArticlesByKeyword: (keyword: string) => void
 }
 
 function HomePage (props: IProps, ref: React.Ref<HomePageRef> | undefined) {
   useImperativeHandle(ref, () => ({
-    searchArticlesByKeyWord: searchArticlesByKeyWord
+    searchArticlesByKeyword: searchArticlesByKeyword
   }))
 
   useEffect(() => {
@@ -55,7 +55,11 @@ function HomePage (props: IProps, ref: React.Ref<HomePageRef> | undefined) {
     return false
   })
 
-  let _posts = category ? articlesManage.getArticlesByCategory(category) : articlesManage.orderByBirthTimeDesc()
+  function getDefaultPosts() {
+    return category ? articlesManage.getArticlesByCategory(category) : articlesManage.orderByBirthTimeDesc()
+  }
+
+  const [currentPosts, setCurrentPosts] = useState(getDefaultPosts())
 
   function routeTo (route: Path | LocationDescriptorObject) {
     if (typeof route === 'string') {
@@ -63,14 +67,18 @@ function HomePage (props: IProps, ref: React.Ref<HomePageRef> | undefined) {
     }
   }
 
-  function searchArticlesByKeyWord (keyword: string) {
-    console.log('search', keyword)
+  function searchArticlesByKeyword (keyword: string) {
+    if (keyword) {
+      setCurrentPosts(articlesManage.getArticlesByKeyword(keyword))
+    } else {
+      setCurrentPosts(getDefaultPosts())
+    }
   }
 
   return (
     <Content>
       <div css={postListStyle}>
-        {_posts.map((post: ArticleObj) => (
+        {currentPosts.map((post: ArticleObj) => (
           <PostCard key={post.id} detail={Object.assign({}, post)} routeTo={routeTo} />
         ))}
       </div>

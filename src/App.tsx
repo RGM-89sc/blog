@@ -17,19 +17,19 @@ interface IRouteComponentProps extends IRouter {
 }
 
 interface HomePageRef {
-  searchArticlesByKeyWord: (keyword: string) => void
+  searchArticlesByKeyword: (keyword: string) => void
 }
 
 function App(props: IProps) {
   const homePageRef = React.createRef<HomePageRef>()
 
   function onSearch(keyword: string) {
-    homePageRef.current?.searchArticlesByKeyWord(keyword)
+    homePageRef.current?.searchArticlesByKeyword(keyword)
   }
 
   return (
     <div id="app">
-      <Header onSearch={onSearch} />
+      <Header {...props} onSearch={onSearch} />
 
       <div id="content">
         <Switch>

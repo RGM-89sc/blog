@@ -6,8 +6,9 @@ import { Dispatch } from 'redux'
 import { StoreState } from '@Types/storeState'
 import Nav from '@Components/nav'
 import useContentWidth from '@Hooks/useContentWidth'
+import { RouteComponentProps } from 'react-router-dom'
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   store: StoreState;
   onSearch: (keyword: string) => any
 }
@@ -28,6 +29,16 @@ function Header (props: IProps) {
         width: 100%;
         text-align: center;
         z-index: 1;
+
+        .search-input {
+          display: block;
+          margin: 40px auto 0;
+          padding: 8px 15px;
+          width: 200px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          outline: none;
+        }
       }
     }
     `,
@@ -96,7 +107,9 @@ function Header (props: IProps) {
           <div>
             <span css={headerCss.blogName}>RGM's blog</span>
             <span css={headerCss.intro}>Pick up your sword and try again.</span>
-            {/* <input type="text" onChange={onSearchWordChange()} /> */}
+            {props.location.pathname === '/' && (
+              <input className="search-input" type="text" placeholder="输入关键词搜索文章" onChange={onSearchWordChange()} />
+            )}
           </div>
         }
         {props.store.headerType === 'article-detail' &&
